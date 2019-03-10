@@ -1,0 +1,54 @@
+<form #formReg="ngForm">
+  <label> empl name</label>
+  <input required ngModel name="name" type ="text">
+  <button  type="button" (click)="serch(formReg)">search</button>
+  <label>{{mess}}</label>
+</form>
+<button  [disabled]="p" (click)="prev()">prev</button>
+<button  [disabled]="n" (click)="next()">next</button>
+<label>{{curentpage+1}} of {{maxPAge}} pages </label>
+
+<table  cellspacing="2" border="1" cellpadding="5" width="600">
+  <tr>
+    <td></td>
+    <td></td>
+    <td>empID</td>
+    <td>empName</td>
+    <td>empActive</td>
+    <td>empDepartment</td>
+    <td></td>
+
+  </tr>
+  <tr *ngFor="let emp of e">
+    <td>
+      <a [queryParams]="emp" [routerLink]="'/empl/'+ emp.empID ">View</a>
+    </td>
+    <td><a routerLink=""  (click)="Edit() "> Edit</a></td>
+    <td> {{emp.empID}}</td>
+    <td> {{emp.empName}}</td>
+    <td> {{emp.empActive}}</td>
+    <td> {{dep[ emp.emp_dpID-1]}}</td>
+    <td> <a routerLink="" (click)="Delete(emp.empID)">Delete</a></td>
+
+  </tr>
+
+</table>
+<form *ngIf="showEdit" #formReg="ngForm">
+  <label> empl name</label>
+  <input required ngModel name="name" type ="text">
+  <br>
+  <label >active</label>
+  <p><input required  ngModel name="active" type="radio"   value="yes"> yes</p>
+  <p><input  required ngModel name="active" type="radio"  value="no"> no</p>
+<label>dep</label>
+  <br>
+  <select  required ngModel name="department" >
+    <option *ngFor="let d of dep" value="{{d}}">{{d}}</option>
+
+  </select>
+  <button  [disabled]="formReg.invalid" type="button" (click)="EditSend(formReg)">edit</button>
+  <button   type="button" (click)="cancel()">cancel</button>
+</form>
+<router-outlet></router-outlet>
+
+
